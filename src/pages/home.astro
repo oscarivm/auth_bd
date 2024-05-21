@@ -1,0 +1,77 @@
+---
+import { getSession } from "auth-astro/server";
+import { db, Productos } from "astro:db";
+
+const productos = await db.select().from(Productos);
+const session = await getSession(Astro.request);
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const nombre = formData.get("nombre");
+  const descripcion = formData.get("descripcion");
+  if (typeof nombre === "string" && typeof descripcion === "string") {
+    await db.insert(Productos).values({ nombre, descripcion });
+    console.log({ nombre, descripcion });
+  }
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login</title>
+  </head>
+  <body>
+    <header>
+      <br />
+    </header>
+    <main>
+      <button id="logout">Logout</button>
+
+      <script>
+        const { signOut } = await import("auth-astro/client");
+        const logout = document.querySelector("#logout");
+
+        logout?.addEventListener("click", async (event) => {
+          event.preventDefault();
+          await signOut({ callbackUrl: "/" });
+        });
+      </script>
+
+      {
+        session && (
+          <>
+            <ul>
+              <p>Hola {session.user?.name}</p>
+            </ul>
+            <img src={session.user?.image} alt="" width="50px" />
+          </>
+        )
+      }
+
+      <h2>Productos</h2>
+
+      <form method="POST" class="grid">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" />
+        <textarea name="descripcion"></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+
+      {
+        productos.map(({ id, nombre }) => (
+          <article>
+            <p>Número: {id}</p>
+            <p>Nombre: {nombre}</p>
+          </article>
+        ))
+      }
+    </main>
+  </body>
+
+  <footer>
+    <br />
+  </footer>
+</html>
