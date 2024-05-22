@@ -1,0 +1,1 @@
+import{_ as e}from"./preload-helper.BiBI96sQ.js";const{signOut:o}=await e(()=>import("./client.BqElmF-z.js"),[]),a=document.querySelector("#logout");a?.addEventListener("click",async t=>{t.preventDefault(),await o({callbackUrl:"/"})});

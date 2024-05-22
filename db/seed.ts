@@ -9,16 +9,5 @@ export default async function seed() {
 			nombre:"PC",
 			descripcion:"pc de escritorio",
 		},
-		{
-			id:2,
-			nombre:"Note",
-			descripcion:"pc de escritorio",
-		},
-		{
-			id:3,
-			nombre:"TV",
-			descripcion:"pc de escritorio",
-		}
-
 	])
 }

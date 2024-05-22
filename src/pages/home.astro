@@ -28,8 +28,6 @@ if (Astro.request.method === "POST") {
       <br />
     </header>
     <main>
-      <button id="logout">Logout</button>
-
       <script>
         const { signOut } = await import("auth-astro/client");
         const logout = document.querySelector("#logout");
@@ -44,30 +42,84 @@ if (Astro.request.method === "POST") {
         session && (
           <>
             <ul>
-              <p>Hola {session.user?.name}</p>
+              <p class="text-3xl text-center p-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Hola {session.user?.name}
+              </p>
             </ul>
-            <img src={session.user?.image} alt="" width="50px" />
+            <div class="flex items-center justify-center p-4">
+              <img
+                src={session.user?.image}
+                alt=""
+                width="100px"
+                class="w-24 h-24"
+              />
+            </div>
           </>
         )
       }
+      <div class="flex items-center justify-center p-4">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          id="logout"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
 
-      <h2>Productos</h2>
+      <form method="POST" class="grid">
+        <div class="grid gap-6 mb-6 md:grid-cols-1 p-20">
+          <div>
+            <label
+              for="nombre"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-blue-500"
+              >ingresa nombre del producto</label
+            >
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="PC"
+              required
+            />
+          </div>
+          <div>
+            <textarea
+              name="descripcion"
+              rows="4"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Ingresa la descripción del producto"></textarea>
+          </div>
 
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >Guardar</button
+          >
+        </div>
+      </form>
+
+      <!-- 
       <form method="POST" class="grid">
         <label for="nombre">Nombre</label>
         <input id="nombre" name="nombre" />
         <textarea name="descripcion"></textarea>
         <button type="submit">Enviar</button>
       </form>
-
-      {
-        productos.map(({ id, nombre }) => (
-          <article>
-            <p>Número: {id}</p>
-            <p>Nombre: {nombre}</p>
-          </article>
-        ))
-      }
+    -->
+      <div>
+        <h1>Lista de productos agregados</h1>
+        <br />
+        {
+          productos.map(({ id, nombre, descripcion }) => (
+            <article>
+              <p>Número: {id}</p>
+              <p>Nombre: {nombre}</p>
+              <p>Descripción: {descripcion}</p>
+            </article>
+          ))
+        }
+      </div>
     </main>
   </body>
 

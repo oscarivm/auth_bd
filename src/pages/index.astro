@@ -1,7 +1,5 @@
 ---
-import { SignIn, SignOut } from "auth-astro/components";
 import { getSession } from "auth-astro/server";
-import { db } from "astro:db";
 
 const session = await getSession(Astro.request);
 console.log(session);
@@ -12,40 +10,54 @@ console.log(session);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Inicio</title>
   </head>
-  <body>
+  <body class="bg-blue-100">
+    <header></header>
     <main>
-      <button id="login-google">Login Google</button>
-      <br />
-      <button id="login-git">Login Githab</button>
-      <br />
-      <button id="logout">Logout</button>
+      <div>
+        <div class="h-screen flex items-center">
+          <div class="mx-auto w-1/2 bg-blue-500 text-white text-center p-4">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              id="login-google">Login Google</button
+            >
 
-      <script>
-        const { signIn, signOut } = await import("auth-astro/client");
-        const login = document.querySelector("#login-google");
-        const logingit = document.querySelector("#login-git");
-        const logout = document.querySelector("#logout");
-        login?.addEventListener("click", async (event) => {
-          event.preventDefault();
-          await signIn("google", {
-            callbackUrl: "/home",
-          });
-        });
-        logingit?.addEventListener("click", async (event) => {
-          event.preventDefault();
-          await signIn("github", {
-            callbackUrl: "/home",
-          });
-        });
-        logout?.addEventListener("click", async (event) => {
-          event.preventDefault();
-          await signOut();
-        });
-      </script>
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              id="login-git">Login Githab</button
+            >
+          </div>
+        </div>
 
-      <!--   {
+        <!--     <button id="logout">Logout</button> -->
+      </div>
+    </main>
+
+    <script>
+      const { signIn, signOut } = await import("auth-astro/client");
+      const login = document.querySelector("#login-google");
+      const logingit = document.querySelector("#login-git");
+      const logout = document.querySelector("#logout");
+      login?.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await signIn("google", {
+          callbackUrl: "/home",
+        });
+      });
+      logingit?.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await signIn("github", {
+          callbackUrl: "/home",
+        });
+      });
+      logout?.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await signOut();
+      });
+    </script>
+
+    <!--   {
         session && (
           <>
             <ul>
@@ -55,10 +67,10 @@ console.log(session);
           </>
         )
       }-->
-    </main>
   </body>
+</html>
 
-  <!--     <body>
+<!--     <body>
     <header>
       <br /><br /><br />
     </header>
@@ -84,4 +96,3 @@ console.log(session);
     </main>
   </body>
    -->
-</html>
